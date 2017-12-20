@@ -1,0 +1,30 @@
+{
+  "name": "mock-helper",
+  "version": "0.0.1",
+  "description": "Module AngularJS avec une Factory capable de gérer des listes d'objets à persister dans le localStorage.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elvynia/mock-helper.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "DAO",
+    "localStorage",
+    "CRUD",
+    "factory",
+    "non-singleton"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Elvynia/mock-helper/issues"
+  },
+  "homepage": "https://github.com/Elvynia/mock-helper#readme",
+  "dependencies": {
+    "angular": "^1.6.7"
+  }
+}
