@@ -3,7 +3,6 @@
 	.factory('MockStorage', function($q) {
 		let wrapper = this;
 		wrapper.deferreds = {};
-		let findById = (item) => item.id === id;
 		let Factory = function(key) {
 			this.idCount = 0;
 			this.key = key;
@@ -13,6 +12,8 @@
 			};
 			this.load = function() {
 				this.store = JSON.parse(localStorage.getItem(this.key)) || [];
+				let tmp = this.store.map((item) => item.id).sort();
+				this.idCount = tmp[tmp.length - 1] + 1 || 0;
 			};
 		};
 		Factory.prototype.create = function(entity) {
@@ -25,23 +26,26 @@
 			return entity;
 		};
 		Factory.prototype.read = function(id) {
-			return this.store.find(findById);
+			return this.store.find((item) => item.id === id);
 		}
 		Factory.prototype.update = function(entity) {
-			if (!entity.id) {
+			if (!entity.id && entity.id !== 0) {
 				throw new Error('Impossible de mettre à jour une entité sans ID.');
 			}
-			let index = this.store.findIndex(findById);
+			let index = this.store.findIndex((item) => item.id === entity.id);
 			if (index >= 0) {
 				this.store.splice(index, 1, entity);
 				this.save();
+			} else {
+				console.warn('Impossible de mettre à jour l\'entité car'
+					+ ' aucun ID %s n\'a été trouvé', entity.id);
 			}
 		};
 		Factory.prototype.delete = function(id) {
-			if (!entity.id) {
+			if (!id && id !== 0) {
 				throw new Error('Impossible de supprimer une entité sans ID.');
 			}
-			let index = this.store.findIndex(findById);
+			let index = this.store.findIndex((item) => item.id === id);
 			if (index >= 0) {
 				this.store.splice(index, 1);
 				this.save();
@@ -50,8 +54,11 @@
 				return false;
 			}
 		}
-		Factory.prototype.has = function(key) {
-			return this.store.findIndex(findById) >= 0;
+		Factory.prototype.has = function(id) {
+			return this.store.findIndex((item) => item.id === id) >= 0;
+		};
+		Factory.prototype.list = function() {
+			return this.store;
 		};
 		Factory.prototype.reinitialize = function() {
 			this.store = [];
