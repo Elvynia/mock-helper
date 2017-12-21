@@ -14,6 +14,7 @@
 				this.store = JSON.parse(localStorage.getItem(this.key)) || [];
 				let tmp = this.store.map((item) => item.id).sort();
 				this.idCount = tmp[tmp.length - 1] + 1 || 0;
+				console.log('MockStotage factory for "%s" loaded %s entities.', this.key, this.store.length);
 			};
 		};
 		Factory.prototype.create = function(entity) {
@@ -61,8 +62,8 @@
 			return this.store;
 		};
 		Factory.prototype.reinitialize = function() {
-			this.store = [];
-			localStorage.removeItem(this.key);
+			this.store.splice(0, this.store.length);
+			this.save();
 		};
 		return {
 			createInstance(key) {
