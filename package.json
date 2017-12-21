@@ -1,6 +1,6 @@
 {
   "name": "mock-helper",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Module AngularJS avec une Factory capable de gérer des listes d'objets à persister dans le localStorage.",
   "main": "index.js",
   "scripts": {
